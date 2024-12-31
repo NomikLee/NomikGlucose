@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6F796C582D23AFB400CF3296 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6F796C572D23AFB400CF3296 /* SDWebImage */; };
+		6F796C5A2D23AFB400CF3296 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6F796C592D23AFB400CF3296 /* SDWebImageMapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6F3F97D12D1D379E00947F9E /* NomikGlucose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NomikGlucose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F796C5A2D23AFB400CF3296 /* SDWebImageMapKit in Frameworks */,
+				6F796C582D23AFB400CF3296 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = NomikGlucose;
 			packageProductDependencies = (
+				6F796C572D23AFB400CF3296 /* SDWebImage */,
+				6F796C592D23AFB400CF3296 /* SDWebImageMapKit */,
 			);
 			productName = NomikGlucose;
 			productReference = 6F3F97D12D1D379E00947F9E /* NomikGlucose.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = 6F3F97C82D1D379E00947F9E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6F3F97D22D1D379E00947F9E /* Products */;
 			projectDirPath = "";
@@ -149,6 +161,8 @@
 				DEVELOPMENT_TEAM = R47YA6WR5Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NomikGlucose/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "糯米血糖幫手";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "本應用程式需要存取您的血糖數據";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -181,6 +195,8 @@
 				DEVELOPMENT_TEAM = R47YA6WR5Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NomikGlucose/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "糯米血糖幫手";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "本應用程式需要存取您的血糖數據";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -343,6 +359,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6F796C572D23AFB400CF3296 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		6F796C592D23AFB400CF3296 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6F3F97C92D1D379E00947F9E /* Project object */;
 }

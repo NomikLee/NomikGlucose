@@ -22,7 +22,7 @@ class AverageTableViewCell: UITableViewCell {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(AverageCollectionViewCell.self, forCellWithReuseIdentifier: AverageCollectionViewCell.identifier)
-        
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -60,6 +60,7 @@ extension AverageTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AverageCollectionViewCell.identifier, for: indexPath) as? AverageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureAverageData(with: glucoseDatas?[indexPath.row].glucoseDate ?? " ", average: glucoseDatas?[indexPath.row].glucoseDataValue ?? 0.0)
+        cell.backgroundColor = .black
         return cell
     }
 }

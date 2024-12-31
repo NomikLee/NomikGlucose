@@ -20,7 +20,10 @@ class HomeViewController: UIViewController {
     // MARK: - UI Components
     private let homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.separatorStyle = .none //禁止使用分隔線
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(AverageTableViewCell.self, forCellReuseIdentifier: AverageTableViewCell.identifier)
+        tableView.register(ConversionTableViewCell.self, forCellReuseIdentifier: ConversionTableViewCell.identifier)
         tableView.register(GlucoseNewTableViewCell.self, forCellReuseIdentifier: GlucoseNewTableViewCell.identifier)
         return tableView
     }()
@@ -30,6 +33,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         view.addSubview(homeTableView)
+        view.backgroundColor = .black
         
         homeTableView.delegate = self
         homeTableView.dataSource = self
@@ -51,6 +55,7 @@ class HomeViewController: UIViewController {
     private func bindView() {
         glucoseViewModel.newGlucoseData()
         glucoseViewModel.bloodGlucoseData()
+        newsViewModel.fetchNewsData()
         
         glucoseViewModel.$newBloodGlucoseData.receive(on: DispatchQueue.main)
             .sink { [weak self] data in
@@ -59,6 +64,12 @@ class HomeViewController: UIViewController {
             .store(in: &cancellables)
         
         glucoseViewModel.$bloodGlucoseAvg.receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.homeTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        newsViewModel.$newsDatas.receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.homeTableView.reloadData()
             }
@@ -87,9 +98,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 120
+            return 140
+        case 1:
+            return 100
         default:
-            return 200
+            return 400
         }
     }
     
@@ -99,6 +112,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let AverageHeaderView = UIView()
             let label = UILabel()
             label.text = "平均血糖 Average Glucose"
+            label.font = .systemFont(ofSize: 24, weight: .semibold)
+            label.textColor = .white
+            label.translatesAutoresizingMaskIntoConstraints = false
+            AverageHeaderView.addSubview(label)
+            
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: AverageHeaderView.leadingAnchor),
+                label.trailingAnchor.constraint(equalTo: AverageHeaderView.trailingAnchor),
+                label.topAnchor.constraint(equalTo: AverageHeaderView.topAnchor),
+                label.bottomAnchor.constraint(equalTo: AverageHeaderView.bottomAnchor),
+            ])
+
+            return AverageHeaderView
+        case 1:
+            let AverageHeaderView = UIView()
+            let label = UILabel()
+            label.text = "血糖換算 Glucose Conversion"
             label.font = .systemFont(ofSize: 24, weight: .semibold)
             label.textColor = .white
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -139,10 +169,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configureData(with: glucoseViewModel.bloodGlucoseAvg)
             return cell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: GlucoseNewTableViewCell.identifier, for: indexPath) as? GlucoseNewTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversionTableViewCell.identifier, for: indexPath) as? ConversionTableViewCell else { return UITableViewCell() }
             return cell
         default:
-            return UITableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GlucoseNewTableViewCell.identifier, for: indexPath) as? GlucoseNewTableViewCell else { return UITableViewCell() }
+            if let newsDatas = newsViewModel.newsDatas {
+                cell.configureData(with: newsDatas)
+            }
+            cell.newsItemSelected.sink { [weak self] url in
+                let webVC = WebViewController()
+                webVC.webSetting(to: url)
+                self?.present(webVC, animated: true)
+            }
+            .store(in: &cancellables)
+            return cell
         }
     }
 }

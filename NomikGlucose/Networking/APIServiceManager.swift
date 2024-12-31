@@ -13,10 +13,18 @@ class APIServiceManager {
     static let shared = APIServiceManager()
     
     func getNewsData() -> AnyPublisher<NewsModel, Error> {
+        
+        let twTimeZone = TimeZone(identifier: "Asia/Taipei")!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = twTimeZone
+        let formattedDate = dateFormatter.string(from: Date())
+        
         var urlComponents = URLComponents(string: Constants.baseUrl)
         
         let queryItems = [
-            URLQueryItem(name: "q", value: "血糖"),
+            URLQueryItem(name: "q", value: "糖尿病"),
+            URLQueryItem(name: "sortBy", value: "popularity"),
             URLQueryItem(name: "apiKey", value: Constants.apiKey),
         ]
         
