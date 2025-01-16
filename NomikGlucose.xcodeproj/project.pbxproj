@@ -9,7 +9,21 @@
 /* Begin PBXBuildFile section */
 		6F796C582D23AFB400CF3296 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 6F796C572D23AFB400CF3296 /* SDWebImage */; };
 		6F796C5A2D23AFB400CF3296 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6F796C592D23AFB400CF3296 /* SDWebImageMapKit */; };
+		6F97B09E2D38A85C002D4A5C /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 6F97B09D2D38A85C002D4A5C /* DGCharts */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6F97B0E12D38ABA4002D4A5C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6F3F97D12D1D379E00947F9E /* NomikGlucose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NomikGlucose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F796C5A2D23AFB400CF3296 /* SDWebImageMapKit in Frameworks */,
+				6F97B09E2D38A85C002D4A5C /* DGCharts in Frameworks */,
 				6F796C582D23AFB400CF3296 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +90,7 @@
 				6F3F97CD2D1D379E00947F9E /* Sources */,
 				6F3F97CE2D1D379E00947F9E /* Frameworks */,
 				6F3F97CF2D1D379E00947F9E /* Resources */,
+				6F97B0E12D38ABA4002D4A5C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -87,6 +103,7 @@
 			packageProductDependencies = (
 				6F796C572D23AFB400CF3296 /* SDWebImage */,
 				6F796C592D23AFB400CF3296 /* SDWebImageMapKit */,
+				6F97B09D2D38A85C002D4A5C /* DGCharts */,
 			);
 			productName = NomikGlucose;
 			productReference = 6F3F97D12D1D379E00947F9E /* NomikGlucose.app */;
@@ -118,6 +135,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				6F97B09C2D38A85C002D4A5C /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6F3F97D22D1D379E00947F9E /* Products */;
@@ -180,7 +198,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -214,7 +232,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -369,6 +387,14 @@
 				minimumVersion = 5.20.0;
 			};
 		};
+		6F97B09C2D38A85C002D4A5C /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -381,6 +407,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6F796C562D23AFB400CF3296 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
+		};
+		6F97B09D2D38A85C002D4A5C /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6F97B09C2D38A85C002D4A5C /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -37,12 +37,10 @@ class HomeHeaderView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemMint
         addSubview(glucoseTitleLabel)
         addSubview(glucoseLable)
         
         configureUI()
-        configureGradientLayer()
     }
     
     required init?(coder: NSCoder) {
@@ -70,14 +68,15 @@ class HomeHeaderView: UIView {
     }
     
     // MARK: - Functions
-    public func configureData(to glucoseData: Double) {
+    public func configureData(to glucoseData: Double, color: UIColor) {
         glucoseLable.text = "\(glucoseData) mg/dL"
+        configureGradientLayer(to: color)
     }
     
-    private func configureGradientLayer() {
+    private func configureGradientLayer(to color: UIColor) {
         gradientLayer.colors = [
-            UIColor(red: 0.6, green: 0.9, blue: 0.6, alpha: 1).cgColor, // 淺綠色
-            UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 1).cgColor  // 深綠色
+            UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 1).cgColor,
+            color.cgColor
         ]
 
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // 頂部

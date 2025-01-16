@@ -14,17 +14,18 @@ class NewsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     func fetchNewsData() {
-        APIServiceManager.shared.getNewsData()
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            } receiveValue: { [weak self] result in
-                self?.newsDatas = result
+        APIServiceManager.shared.getNewsData().sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            .store(in: &cancellables)
+        } receiveValue: { [weak self] newsData in
+            self?.newsDatas = newsData
+        }
+        .store(in: &cancellables)
     }
 }
+
+

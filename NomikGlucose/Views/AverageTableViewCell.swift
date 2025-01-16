@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class AverageTableViewCell: UITableViewCell {
     
@@ -13,6 +14,8 @@ class AverageTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     private var glucoseDatas: [GlucoseModel]?
+    let collectionItemTapped = PassthroughSubject<String, Never>()
+    var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
     private let averageCollectionView: UICollectionView = {
@@ -23,13 +26,13 @@ class AverageTableViewCell: UITableViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(AverageCollectionViewCell.self, forCellWithReuseIdentifier: AverageCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .black
         return collectionView
     }()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .systemRed
         contentView.addSubview(averageCollectionView)
         
         averageCollectionView.delegate = self
@@ -45,10 +48,16 @@ class AverageTableViewCell: UITableViewCell {
         averageCollectionView.frame = contentView.bounds
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables.removeAll() // 清除之前的 Combine 訂閱
+    }
+    
     // MARK: - UI Setup
     // MARK: - Functions
     public func configureData(with glucoseDatas: [GlucoseModel]){
         self.glucoseDatas = glucoseDatas
+        self.glucoseDatas?.sort{ $0.tag < $1.tag } //防止collectionView cell 沒有照順序
         averageCollectionView.reloadData()
     }
 }
@@ -59,9 +68,13 @@ extension AverageTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AverageCollectionViewCell.identifier, for: indexPath) as? AverageCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureAverageData(with: glucoseDatas?[indexPath.row].glucoseDate ?? " ", average: glucoseDatas?[indexPath.row].glucoseDataValue ?? 0.0)
+        cell.configureAverageData(with: glucoseDatas?[indexPath.item].glucoseDate ?? " ", average: glucoseDatas?[indexPath.item].glucoseDataValue ?? 0.0, color: glucoseDatas?[indexPath.item].glucoseColor ?? .white)
         cell.backgroundColor = .black
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionItemTapped.send(glucoseDatas?[indexPath.row].glucoseDate ?? "")
     }
 }
 

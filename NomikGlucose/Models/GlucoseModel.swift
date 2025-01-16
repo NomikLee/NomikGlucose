@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct GlucoseModel {
     let glucoseDataValue: Double
     let glucoseDate: String
+    let glucoseColor: UIColor
+    let tag: Int
 }

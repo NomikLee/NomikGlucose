@@ -13,7 +13,7 @@ class MainTabbarController: UITabBarController {
         super.viewDidLoad()
         
         let vc1 = HomeViewController()
-        let vc2 = DetailViewController()
+        let vc2 = ListViewController()
         
         let nav1 = UINavigationController(rootViewController: vc1)
         let nav2 = UINavigationController(rootViewController: vc2)
