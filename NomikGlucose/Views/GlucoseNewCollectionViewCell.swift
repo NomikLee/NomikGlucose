@@ -86,4 +86,3 @@ class GlucoseNewCollectionViewCell: UICollectionViewCell {
         newsSources.text = sources
     }
 }
-// MARK: - Extension

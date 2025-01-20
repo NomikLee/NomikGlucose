@@ -14,7 +14,7 @@ class AverageTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     private var glucoseDatas: [GlucoseModel]?
-    let collectionItemTapped = PassthroughSubject<String, Never>()
+    let dateTransport = PassthroughSubject<[String], Never>()
     var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
@@ -74,7 +74,7 @@ extension AverageTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionItemTapped.send(glucoseDatas?[indexPath.row].glucoseDate ?? "")
+        dateTransport.send([glucoseDatas?[indexPath.row].glucoseDate ?? "", String(glucoseDatas?[indexPath.row].glucoseDataValue ?? 0.0)])
     }
 }
 

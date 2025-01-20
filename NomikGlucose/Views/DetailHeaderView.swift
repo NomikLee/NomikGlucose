@@ -40,8 +40,8 @@ class DetailHeaderView: UIView {
     }
     
     // MARK: - Functions
-    public func bindView(to PiePublisher: AnyPublisher<[Double], Never>) {
-        PiePublisher.sink { [weak self] pieDatas in
+    public func bindView(to piePublisher: AnyPublisher<[Double], Never>) {
+        piePublisher.sink { [weak self] pieDatas in
             self?.setupPieData(to: pieDatas)
         }
         .store(in: &cancellables)

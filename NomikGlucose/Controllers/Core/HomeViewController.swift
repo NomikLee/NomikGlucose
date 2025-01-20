@@ -234,13 +234,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AverageTableViewCell.identifier, for: indexPath) as? AverageTableViewCell else { return UITableViewCell() }
             cell.configureData(with: glucoseViewModel.avgbloodGlucose)
             cell.cancellables.removeAll() //防止連續push
-            cell.collectionItemTapped.sink { [weak self] title in
+            cell.dateTransport.sink { [weak self] datas in
                 let vc = DetailViewController()
-                vc.title = "過去\(title)天血糖"
+                vc.title = "過去\(datas[0])天血糖"
+                vc.bindView(Double(datas[1]) ?? 0.0)
                 self?.navigationController?.setNavigationBarHidden(false, animated: true)
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             .store(in: &cell.cancellables) //防止連續push
+            
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversionTableViewCell.identifier, for: indexPath) as? ConversionTableViewCell else { return UITableViewCell() }
