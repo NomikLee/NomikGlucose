@@ -11,12 +11,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = UINavigationController(rootViewController: MainTabbarController())
+        
+        let enterTheMark = UserDefaults.standard.bool(forKey: "enterTheMark") //當進入過主頁後在enterTheMark設定true來當標記 可以跳過說明頁面
+        
+        if enterTheMark {
+            window?.rootViewController = UINavigationController(rootViewController: MainTabbarController())
+        }else {
+            window?.rootViewController = UINavigationController(rootViewController: StartedViewController())
+        }
+        
         window?.makeKeyAndVisible()
     }
 

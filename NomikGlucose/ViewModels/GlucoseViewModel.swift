@@ -55,7 +55,7 @@ class GlucoseViewModel: ObservableObject {
                     
                     let newBloodGlucose = data.quantity.doubleValue(for: HKUnit(from: "mg/dL"))
                     
-                    if newBloodGlucose > 160 {
+                    if newBloodGlucose >= 160 {
                         allGlucoseJudgeColor = .orange
                     }else if newBloodGlucose > 130 && newBloodGlucose < 160{
                         allGlucoseJudgeColor = .systemYellow
@@ -66,11 +66,9 @@ class GlucoseViewModel: ObservableObject {
                     }else {
                         allGlucoseJudgeColor = .white
                     }
-                    
-                    DispatchQueue.main.async {
-                        self?.allBloodGlucose.append(GlucoseModel(glucoseDataValue: newBloodGlucose, glucoseDate: formattedDate, glucoseColor: allGlucoseJudgeColor ?? .white, tag: i))
-                    }
+                    self?.allBloodGlucose.append(GlucoseModel(glucoseDataValue: newBloodGlucose, glucoseDate: formattedDate, glucoseColor: allGlucoseJudgeColor ?? .white, tag: i))
                 }
+                self?.allBloodGlucose.sort{ $0.tag > $1.tag }
             } catch {
                 print("讀取血糖數據失敗: \(error.localizedDescription)")
             }
@@ -118,7 +116,7 @@ class GlucoseViewModel: ObservableObject {
                     }
                     let avgValue = avg / Double(datas.count)
                     
-                    if avgValue > 160 {
+                    if avgValue >= 160 {
                         glucoseJudgeColor = .orange
                     }else if avgValue > 130 && avgValue < 160{
                         glucoseJudgeColor = .systemYellow
@@ -132,9 +130,7 @@ class GlucoseViewModel: ObservableObject {
                     
                     let avgRound = String(format: "%.1f", avgValue)
                     
-                    DispatchQueue.main.async {
-                        self?.avgbloodGlucose.append(GlucoseModel(glucoseDataValue: Double(avgRound) ?? 0.0, glucoseDate: "\(abs(day))", glucoseColor: glucoseJudgeColor ?? .white, tag: i))
-                    }
+                    self?.avgbloodGlucose.append(GlucoseModel(glucoseDataValue: Double(avgRound) ?? 0.0, glucoseDate: "\(abs(day))", glucoseColor: glucoseJudgeColor ?? .white, tag: i))
                 } catch {
                     print("讀取血糖數據失敗: \(error.localizedDescription)")
                 }

@@ -58,9 +58,9 @@ class HomeHeaderView: UIView {
             glucoseTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             glucoseTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             glucoseTitleLabel.heightAnchor.constraint(equalToConstant: 20),
-            glucoseTitleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            glucoseTitleLabel.bottomAnchor.constraint(equalTo: glucoseLable.topAnchor, constant: -10),
             
-            glucoseLable.topAnchor.constraint(equalTo: glucoseTitleLabel.bottomAnchor, constant: 20),
+            glucoseLable.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -70),
             glucoseLable.leadingAnchor.constraint(equalTo: leadingAnchor),
             glucoseLable.trailingAnchor.constraint(equalTo: trailingAnchor),
             glucoseLable.heightAnchor.constraint(equalToConstant: 50),

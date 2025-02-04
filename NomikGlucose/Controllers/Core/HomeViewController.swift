@@ -19,7 +19,6 @@ class HomeViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
-    
     private let homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .black
@@ -46,7 +45,7 @@ class HomeViewController: UIViewController {
         homeTableView.tableHeaderView = headerView
         homeTableView.contentInsetAdjustmentBehavior = .never
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(cancelKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
@@ -56,7 +55,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        homeTableView.frame = view.bounds
+        homeTableView.frame = view.bounds 
     }
     
     // MARK: - Functions
@@ -65,15 +64,15 @@ class HomeViewController: UIViewController {
         glucoseViewModel.fetchAvgbloodGlucoseData()
         newsViewModel.fetchNewsData()
         
-        glucoseViewModel.$allBloodGlucose.sink { [weak self] allGlucoseDatas in
-            self?.headerView.configureData(to: allGlucoseDatas.last?.glucoseDataValue ?? 0.0, color: allGlucoseDatas.last?.glucoseColor ?? .white)
-                                            }
-                                            .store(in: &cancellables)
+        glucoseViewModel.$allBloodGlucose.receive(on: DispatchQueue.main).sink { [weak self] allGlucoseDatas in
+            self?.headerView.configureData(to: allGlucoseDatas.first?.glucoseDataValue ?? 0.0, color: allGlucoseDatas.first?.glucoseColor ?? .white)
+            }
+            .store(in: &cancellables)
         
-        glucoseViewModel.$avgbloodGlucose.sink { [weak self] _ in
-                                                self?.homeTableView.reloadData()
-                                            }
-                                            .store(in: &cancellables)
+        glucoseViewModel.$avgbloodGlucose.receive(on: DispatchQueue.main).sink { [weak self] _ in
+                self?.homeTableView.reloadData()
+            }
+            .store(in: &cancellables)
         
         newsViewModel.$newsDatas.sink { [weak self] _ in
             self?.homeTableView.reloadData()
@@ -122,7 +121,7 @@ class HomeViewController: UIViewController {
         present(pageVC, animated: true)
     }
     
-    @objc private func cancelKeyboard() {
+    @objc private func closeKeyboard() {
         view.endEditing(true)
     }
 }
@@ -237,7 +236,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.dateTransport.sink { [weak self] datas in
                 let vc = DetailViewController()
                 vc.title = "過去\(datas[0])天血糖"
-                vc.bindView(Double(datas[1]) ?? 0.0)
+                vc.bindView(Double(datas[1]) ?? 0.0, title: vc.title ?? "")
                 self?.navigationController?.setNavigationBarHidden(false, animated: true)
                 self?.navigationController?.pushViewController(vc, animated: true)
             }

@@ -16,7 +16,7 @@ class APIServiceManager {
         var urlComponents = URLComponents(string: Constants.newsBaseUrl)
         
         let queryItems = [
-            URLQueryItem(name: "q", value: "糖尿病"),
+            URLQueryItem(name: "q", value: "血糖"),
             URLQueryItem(name: "apiKey", value: Constants.newsApiKey),
         ]
         
@@ -32,7 +32,7 @@ class APIServiceManager {
             .eraseToAnyPublisher()
     }
     
-    func getGeminiData(to glucoseValue: Double) -> AnyPublisher<GeminiModel, Error> {
+    func getGeminiData(to glucoseValueDate: String, glucoseValue: Double) -> AnyPublisher<GeminiModel, Error> {
         var urlComponent = URLComponents(string: Constants.geminiBaseUrl)
         
         let queryItems = [URLQueryItem(name: "key", value: Constants.geminiApiKey)]
@@ -48,7 +48,7 @@ class APIServiceManager {
             "contents": [
                 [
                     "parts": [
-                        ["text": "血糖平均為\(glucoseValue) 給我分析一下並建議"]
+                        ["text": "\(glucoseValueDate)平均為\(glucoseValue) 給我分析並建議"]
                     ]
                 ]
             ]

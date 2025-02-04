@@ -13,8 +13,8 @@ class GeminiViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    func fetchAiFeedback(to glucoseValue: Double) {
-        APIServiceManager.shared.getGeminiData(to: glucoseValue).sink { completion in
+    func fetchAiFeedback(to glucoseValueDate: String, glucoseValue: Double) {
+        APIServiceManager.shared.getGeminiData(to: glucoseValueDate, glucoseValue: glucoseValue).sink { completion in
             switch completion {
             case .finished:
                 break

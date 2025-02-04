@@ -57,11 +57,11 @@ class DetailViewController: UIViewController {
     }
     
     // MARK: - Functions
-    public func bindView(_ glucoseValue: Double) {
+    public func bindView(_ glucoseValue: Double, title: String) {
         if glucoseValue.isNaN == true {
             stateString = "無量測數據可以給AI分析"
         } else {
-            geminiViewModel.fetchAiFeedback(to: glucoseValue)
+            geminiViewModel.fetchAiFeedback(to: title, glucoseValue: glucoseValue)
             stateString = "AI分析中請稍後..."
             geminiViewModel.$aiFeedbackInfos.sink { [weak self] _ in
                 self?.detailTableView.reloadData()

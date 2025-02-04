@@ -63,7 +63,8 @@ class DetailTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     public func configureData(with feedback: String) {
-        aiLabel.text = "\(feedback)"
+        let cleanFeedback = feedback.replacingOccurrences(of: "**", with: "")
+        aiLabel.text = "\(cleanFeedback)"
     }
     
     // MARK: - UI Setup
