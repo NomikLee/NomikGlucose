@@ -13,6 +13,8 @@ class FirebaseServiceManager {
     
     static let shard = FirebaseServiceManager()
     
+    private init() {}
+    
     private let db = Firestore.firestore()
     
     //取得Firebase食物Manager

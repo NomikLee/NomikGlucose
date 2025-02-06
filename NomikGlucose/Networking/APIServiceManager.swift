@@ -12,6 +12,8 @@ class APIServiceManager {
     
     static let shared = APIServiceManager()
     
+    private init() {}
+    
     func getNewsData() -> AnyPublisher<NewsModel, Error> {
         var urlComponents = URLComponents(string: Constants.newsBaseUrl)
         
